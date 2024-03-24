@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
     private int numOfPlayers = 1;
-    private ListView handListView;
+    private RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
         // или передать это число этой активити
         Game game = new Game(numOfPlayers);
 
-        handListView = findViewById(R.id.hand_listView);
-
-        CardAdapter cardAdapter = new CardAdapter(MainActivity.this, game.players.get(0).hand.cards);
-
-        handListView.setAdapter(cardAdapter);
+        recyclerView = findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        CardAdapter adapter = new CardAdapter(this, game.players.get(0).hand.cards);
+        recyclerView.setAdapter(adapter);
 
     }
 }
