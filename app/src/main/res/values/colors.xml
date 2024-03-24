@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="sea1">#496989</color>
+    <color name="sea2">#58A399</color>
+    <color name="sea3">#A8CD9F</color>
+    <color name="sea4">#E2F4C5</color>
+
+    <color name="card_red">     #A0153E</color>
+    <color name="card_orange">  #FF9B50</color>
+    <color name="card_yellow">  #FFD93D</color>
+    <color name="card_green">   #42855B</color>
+    <color name="card_blue">    #0096FF</color>
+    <color name="card_indigo">  #051367</color>
+    <color name="card_violet">  #916BBF</color>
+</resources>

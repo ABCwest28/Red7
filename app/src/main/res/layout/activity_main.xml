@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/upper_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/sea1"
+        android:layout_weight="2">
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/game_field_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/sea2"
+        android:layout_weight="30">
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/hand_field_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/sea3"
+        android:layout_weight="7">
+
+        <ListView
+            android:id="@+id/hand_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+</LinearLayout>
