@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minWidth="20dp"
-    android:minHeight="40dp">
-    <TextView
-        android:id="@+id/number_of_card_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    android:id="@+id/card_layout_outer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="2dp"
+    android:background="@color/black"
+    >
+    <RelativeLayout
+        android:id="@+id/card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/number_of_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="50sp"/>
+    </RelativeLayout>
+
 </RelativeLayout>

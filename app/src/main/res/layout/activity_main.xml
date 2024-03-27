@@ -9,31 +9,25 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
-        android:id="@+id/upper_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/sea1"
-        android:layout_weight="2">
-    </RelativeLayout>
-    <RelativeLayout
         android:id="@+id/game_field_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/sea2"
-        android:layout_weight="30">
+        android:background="@color/sea1"
+        android:layout_weight="1">
 
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/hand_field_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/sea3"
-        android:layout_weight="7">
+        android:layout_height="wrap_content"
+        android:background="@color/sea2"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
 
     </RelativeLayout>
 

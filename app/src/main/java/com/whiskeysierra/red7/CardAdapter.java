@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,16 +16,24 @@ import java.util.ArrayList;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private ArrayList<Card> cards;
     private Context context;
+    private int itemWidth, itemHeight;
 
-    public CardAdapter(Context context, ArrayList<Card> cards) {
+    public CardAdapter(Context context, ArrayList<Card> cards, int itemWidth, int itemHeight) {
         this.context = context;
         this.cards = cards;
+        this.itemWidth = itemWidth;
+        this.itemHeight = itemHeight;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_card_in_hand, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_card_in_hand,
+                parent, false);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = itemWidth;
+        layoutParams.height = itemHeight;
+        view.setLayoutParams(layoutParams);
         return new ViewHolder(view);
     }
 
@@ -33,6 +41,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cards.get(position);
         holder.bind(card);
+
     }
 
     @Override
@@ -41,50 +50,52 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewCard;
-        private RelativeLayout relativeLayout;
+        private TextView number_of_card;
+        private RelativeLayout card_layout;
+        private RelativeLayout card_layout_outer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewCard = itemView.findViewById(R.id.number_of_card_layout);
-            relativeLayout = itemView.findViewById(R.id.card_layout);
+            number_of_card = itemView.findViewById(R.id.number_of_card);
+            card_layout = itemView.findViewById(R.id.card_layout);
+            card_layout_outer = itemView.findViewById(R.id.card_layout_outer);
         }
 
         public void bind(Card card) {
             if (card == null) {
-                textViewCard.setText("0");
+                number_of_card.setText("0");
             } else {
-                textViewCard.setText(String.valueOf(card.number));
+                number_of_card.setText(String.valueOf(card.number));
 
                 int color;
                 switch (card.valueOfColor) {
                     case 1:
                         color = context.getResources().getColor(R.color.card_violet);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                     case 2:
                         color = context.getResources().getColor(R.color.card_indigo);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                     case 3:
                         color = context.getResources().getColor(R.color.card_blue);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                     case 4:
                         color = context.getResources().getColor(R.color.card_green);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                     case 5:
                         color = context.getResources().getColor(R.color.card_yellow);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                     case 6:
                         color = context.getResources().getColor(R.color.card_orange);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                     case 7:
                         color = context.getResources().getColor(R.color.card_red);
-                        relativeLayout.setBackgroundColor(color);
+                        card_layout.setBackgroundColor(color);
                         break;
                 }
             }
