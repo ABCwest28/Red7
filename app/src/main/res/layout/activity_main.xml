@@ -13,14 +13,85 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/sea1"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top"
+                app:layout_constraintEnd_toStartOf="@+id/right_recycler"
+                app:layout_constraintStart_toEndOf="@+id/left_recycler"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/active_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/left_recycler"
+                app:layout_constraintEnd_toStartOf="@+id/right_recycler"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_b"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/right_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/top_recycler"
+                app:layout_constraintBottom_toTopOf="@+id/active_recycler"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/left_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/top_recycler"
+                app:layout_constraintBottom_toTopOf="@+id/active_recycler"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.95" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/hand_field_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/sea2"
         >
 
         <androidx.recyclerview.widget.RecyclerView

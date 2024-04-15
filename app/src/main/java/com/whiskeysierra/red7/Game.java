@@ -8,8 +8,8 @@ public class Game {
     protected Card rulesPile;
 
     public Game(int numOfPlayers) {
-        players = new ArrayList<>(numOfPlayers);
         deck = new Deck();
+        players = new ArrayList<>(numOfPlayers);
         rulesPile = new Card("Red", 0);
 
         for (int i = 0; i < numOfPlayers; ++i) {

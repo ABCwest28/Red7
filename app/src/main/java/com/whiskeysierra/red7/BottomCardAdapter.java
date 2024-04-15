@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+public class BottomCardAdapter extends RecyclerView.Adapter<BottomCardAdapter.ViewHolder> {
     private ArrayList<Card> cards;
     private Context context;
     private int itemWidth, itemHeight;
 
-    public CardAdapter(Context context, ArrayList<Card> cards, int itemWidth, int itemHeight) {
+    public BottomCardAdapter(Context context, ArrayList<Card> cards, int itemWidth, int itemHeight) {
         this.context = context;
         this.cards = cards;
         this.itemWidth = itemWidth;
@@ -41,7 +40,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cards.get(position);
         holder.bind(card);
-
     }
 
     @Override
