@@ -1,6 +1,7 @@
 package com.whiskeysierra.red7;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 //import android.view.View;
 
@@ -14,8 +15,9 @@ public class MainActivity extends AppCompatActivity {
     // или добавить метод с изменением числа игроков,
     // или передать это число этой активити
     public Game game;
-    private TextView handTopView, handLeftView, handRightView;
-    private TextView handLeftViewOuter;
+    private TextView handTopView, handRightView;
+    private VerticalTextView handLeftViewInner;
+    private LinearLayout handLeftViewOuter;
     private RecyclerView bottomRecyclerView, activeRecyclerView,
             leftRecyclerView, rightRecyclerView, topRecyclerView;
     private LinearLayoutManager bottomLayoutManager, activeLayoutManager,
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         rightRecyclerView   = findViewById(R.id.right_recycler);
 
         handTopView         = findViewById(R.id.hand_top_view);
-        handLeftView        = findViewById(R.id.hand_left_view);
-        //handLeftViewOuter   = findViewById(R.id.hand_left_view_outer);
+        handLeftViewInner   = findViewById(R.id.hand_left_view_inner);
+        handLeftViewOuter   = findViewById(R.id.hand_left_view_outer);
 
         preparationByPlayers(numOfPlayers);
     }
@@ -89,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                         fieldCardWidth, fieldCardHeight);
                 leftRecyclerView.setAdapter(leftCardAdapter);
 
-                handLeftView.setText(String.valueOf(game.players.get(1).hand.cards.size()));
-                //handLeftViewOuter.setHeight(fieldCardWidth + 20);
+                handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
+                handLeftViewOuter.setMinimumHeight(fieldCardWidth + 20);
 
                 break;
             case 4:

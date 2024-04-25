@@ -100,25 +100,30 @@
                 app:layout_constraintTop_toTopOf="@+id/top_recycler"
                 />
 
-            <TextView
-                android:id="@+id/hand_left_view"
+            <LinearLayout
+                android:id="@+id/hand_left_view_outer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/deck_lr_drawable"
 
-                android:paddingBottom="6dp"
-
-                android:gravity="bottom|center"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                android:rotation="90"
+                android:gravity="center|bottom"
 
                 app:layout_constraintEnd_toEndOf="@+id/left_recycler"
                 app:layout_constraintStart_toStartOf="@+id/left_recycler"
                 app:layout_constraintBottom_toTopOf="@+id/left_recycler"
                 >
-            </TextView>
+                <com.whiskeysierra.red7.VerticalTextView
+                    android:id="@+id/hand_left_view_inner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="35sp"
+                    android:gravity="top|right"
+
+                    >
+                </com.whiskeysierra.red7.VerticalTextView>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
