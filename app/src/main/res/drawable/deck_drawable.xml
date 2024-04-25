@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Первый прямоугольник с контурами -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="4dp"
+                android:color="#2A2A2A" />
+            <solid android:color="#949494" />
+        </shape>
+    </item>
+    <!-- Второй прямоугольник, сдвинутый влево -->
+    <item android:left="8dp">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="4dp"
+                android:color="#2A2A2A" />
+            <solid android:color="#949494" />
+        </shape>
+    </item>
+    <!-- Третий прямоугольник, еще больше сдвинутый влево -->
+    <item android:left="16dp">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="4dp"
+                android:color="#2A2A2A" />
+            <solid android:color="#949494" />
+        </shape>
+    </item>
+</layer-list>
