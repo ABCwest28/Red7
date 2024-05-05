@@ -93,7 +93,7 @@
                 android:background="@drawable/deck_drawable"
                 android:gravity="end|center"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="35sp"
                 android:paddingEnd="6dp"
                 app:layout_constraintBottom_toBottomOf="@+id/top_recycler"
                 app:layout_constraintEnd_toStartOf="@+id/top_recycler"
@@ -123,6 +123,60 @@
 
                     >
                 </com.whiskeysierra.red7.VerticalTextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hand_right_view_outer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/deck_lr_drawable"
+
+                android:gravity="center|bottom"
+
+                app:layout_constraintEnd_toEndOf="@+id/right_recycler"
+                app:layout_constraintStart_toStartOf="@+id/right_recycler"
+                app:layout_constraintBottom_toTopOf="@+id/right_recycler"
+                >
+                <com.whiskeysierra.red7.VerticalTextView
+                    android:id="@+id/hand_right_view_inner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="35sp"
+                    android:gravity="bottom|right"
+
+                    >
+                </com.whiskeysierra.red7.VerticalTextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rules_pile_outer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_gray"
+                android:padding="4dp"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@id/guideline_left"
+                app:layout_constraintEnd_toStartOf="@id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@id/guideline_top"
+                app:layout_constraintBottom_toTopOf="@id/guideline_bottom_b"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/rules_pile_color"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/rules_pile_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="35sp" />
+                </LinearLayout>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

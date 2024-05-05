@@ -17,7 +17,7 @@ public class Game {
         }
     }
 
-    public int getIdWinner() {
+    public int getIdWinner(Card ruleCard) {
         class DataToCheck {
             int id;
             ArrayList<Card> cards;
@@ -32,7 +32,7 @@ public class Game {
         ArrayList<DataToCheck> listDataToChecks = new ArrayList<>();
 
         for (int i = 0; i < players.size(); ++i) {
-            listDataToChecks.add(new DataToCheck(i, players.get(i).getRuledCards(rulesPile)));
+            listDataToChecks.add(new DataToCheck(i, players.get(i).getRuledCards(ruleCard)));
         }
 
         // Проверяем по кол-ву карт - исключаем у кого меньше карт
@@ -57,5 +57,23 @@ public class Game {
         }
 
         return idOfPlayerWithHighestCard;
+    }
+
+    public boolean checkWin() {
+        int activePlayers = 0;
+        for (Player player : players) if (player.isInGame) ++activePlayers;
+        if (activePlayers == 1)
+            return true;
+        else
+            return false;
+    }
+
+    public int getNextId() {
+        int id = getIdWinner(rulesPile);
+        do {
+            if (id + 1 < players.size()) id++;
+            else id = 0;
+            if (players.get(id).isInGame) return id;
+        } while (true);
     }
 }

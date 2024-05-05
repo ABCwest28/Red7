@@ -16,12 +16,17 @@ public class LRCardAdapter extends RecyclerView.Adapter<LRCardAdapter.ViewHolder
     private ArrayList<Card> cards;
     private Context context;
     private int itemWidth, itemHeight;
+    /**
+     * false - left, true - right
+     */
+    private boolean type;
 
-    public LRCardAdapter(Context context, ArrayList<Card> cards, int itemHeight, int itemWidth) {
+    public LRCardAdapter(Context context, ArrayList<Card> cards, int itemHeight, int itemWidth, boolean type) {
         this.context = context;
         this.cards = cards;
         this.itemHeight = itemHeight;
         this.itemWidth = itemWidth;
+        this.type = type;
     }
 
     @NonNull
@@ -40,15 +45,6 @@ public class LRCardAdapter extends RecyclerView.Adapter<LRCardAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Card card = cards.get(position);
         holder.bind(card);
-
-        holder.number_of_card.post(new Runnable() {
-            @Override
-            public void run() {
-//                holder.number_of_card.setPivotX((float) holder.number_of_card.getWidth() / 2);
-//                holder.number_of_card.setPivotY((float) holder.number_of_card.getHeight() / 2);
-//                holder.number_of_card.setRotation(90);
-            }
-        });
     }
 
     @Override
@@ -73,7 +69,9 @@ public class LRCardAdapter extends RecyclerView.Adapter<LRCardAdapter.ViewHolder
                 number_of_card.setText("0");
             } else {
                 number_of_card.setText(String.valueOf(card.number));
-                number_of_card.setRotation(90);
+
+                if (type)   number_of_card.setRotation(-90);
+                else        number_of_card.setRotation(90);
 
                 int color;
                 switch (card.valueOfColor) {
