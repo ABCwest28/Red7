@@ -1,5 +1,6 @@
 package com.whiskeysierra.red7;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -9,16 +10,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    private int numOfPlayers = 4;
-    //TODO Нужно создать позднее, когда будет известно число игроков,
-    // или добавить метод с изменением числа игроков,
-    // или передать это число этой активити
+    private int numOfPlayers;
     public Game game;
     private LinearLayout rulesPileColor, rulesPileOuter;
     private TextView handTopView, rulesPileNumber;
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ActiveCardAdapter activeCardAdapter;
     private TopCardAdapter topCardAdapter;
     private LRCardAdapter leftCardAdapter, rightCardAdapter;
+    private Drawable deck_drawable, deck_lr_drawable, deck_active_drawable, deck_lr_active_drawable;
     private int bottomCardWidth, bottomCardHeight, fieldCardWidth, fieldCardHeight;
 
 
@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        numOfPlayers = getIntent().getIntExtra("numOfPlayers", 4);
 
         bottomRecyclerView  = findViewById(R.id.recyclerView);
         activeRecyclerView  = findViewById(R.id.active_recycler);
@@ -52,9 +54,14 @@ public class MainActivity extends AppCompatActivity {
         handRightViewInner  = findViewById(R.id.hand_right_view_inner);
         handRightViewOuter  = findViewById(R.id.hand_right_view_outer);
 
-        rulesPileOuter       = findViewById(R.id.rules_pile_outer);
+        rulesPileOuter      = findViewById(R.id.rules_pile_outer);
         rulesPileColor      = findViewById(R.id.rules_pile_color);
         rulesPileNumber     = findViewById(R.id.rules_pile_number);
+
+        deck_drawable           = ContextCompat.getDrawable(this, R.drawable.deck_drawable);
+        deck_lr_drawable        = ContextCompat.getDrawable(this, R.drawable.deck_lr_drawable);
+        deck_active_drawable    = ContextCompat.getDrawable(this, R.drawable.deck_active_drawable);
+        deck_lr_active_drawable = ContextCompat.getDrawable(this, R.drawable.deck_lr_active_drawable);
 
         preparationByPlayers(numOfPlayers);
         setShowTooltipHandCards();
@@ -227,77 +234,106 @@ public class MainActivity extends AppCompatActivity {
                         else {
                             int turnResult = game.players.get(idPlayerTurn).doTurn();
 
-                            if (turnResult == 0) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Player has no cards", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                            switch (turnResult) {
+                                case 0:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(MainActivity.this, "Player has no cards", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    break;
 
-                            else if (turnResult == 4) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Player has no choice", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                                case 4:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(MainActivity.this, "Player has no choice", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    break;
 
-                            else if (turnResult == 1) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Player played card", Toast.LENGTH_SHORT).show();
-                                        topCardAdapter.notifyDataSetChanged();
-                                        leftCardAdapter.notifyDataSetChanged();
-                                        rightCardAdapter.notifyDataSetChanged();
-                                        activeCardAdapter.notifyDataSetChanged();
-                                        bottomCardAdapter.notifyDataSetChanged();
+                                case 1:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(MainActivity.this, "Player played card", Toast.LENGTH_SHORT).show();
+                                            topCardAdapter.notifyDataSetChanged();
+                                            leftCardAdapter.notifyDataSetChanged();
+                                            rightCardAdapter.notifyDataSetChanged();
+                                            activeCardAdapter.notifyDataSetChanged();
+                                            bottomCardAdapter.notifyDataSetChanged();
 
-                                        handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
-                                        handTopView.setText(String.valueOf(game.players.get(2).hand.cards.size()));
-                                        handRightViewInner.setText(String.valueOf(game.players.get(3).hand.cards.size()));
-                                    }
-                                });
-                            }
+                                            handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
+                                            handTopView.setText(String.valueOf(game.players.get(2).hand.cards.size()));
+                                            handRightViewInner.setText(String.valueOf(game.players.get(3).hand.cards.size()));
+                                        }
+                                    });
+                                    break;
+                                case 2:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(MainActivity.this, "Player discarded card", Toast.LENGTH_SHORT).show();
+                                            setCardToRulesPile(game.rulesPile);
+                                            bottomCardAdapter.notifyDataSetChanged();
 
-                            else if (turnResult == 2) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Player discarded card", Toast.LENGTH_SHORT).show();
-                                        setCardToRulesPile(game.rulesPile);
-                                        bottomCardAdapter.notifyDataSetChanged();
+                                            handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
+                                            handTopView.setText(String.valueOf(game.players.get(2).hand.cards.size()));
+                                            handRightViewInner.setText(String.valueOf(game.players.get(3).hand.cards.size()));
+                                        }
+                                    });
+                                    break;
+                                case 3:
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(MainActivity.this, "Player played and discarded card", Toast.LENGTH_SHORT).show();
+                                            topCardAdapter.notifyDataSetChanged();
+                                            leftCardAdapter.notifyDataSetChanged();
+                                            rightCardAdapter.notifyDataSetChanged();
+                                            activeCardAdapter.notifyDataSetChanged();
+                                            bottomCardAdapter.notifyDataSetChanged();
 
-                                        handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
-                                        handTopView.setText(String.valueOf(game.players.get(2).hand.cards.size()));
-                                        handRightViewInner.setText(String.valueOf(game.players.get(3).hand.cards.size()));
-                                    }
-                                });
-                            }
+                                            setCardToRulesPile(game.rulesPile);
 
-                            else if (turnResult == 3) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Player played and discarded card", Toast.LENGTH_SHORT).show();
-                                        topCardAdapter.notifyDataSetChanged();
-                                        leftCardAdapter.notifyDataSetChanged();
-                                        rightCardAdapter.notifyDataSetChanged();
-                                        activeCardAdapter.notifyDataSetChanged();
-                                        bottomCardAdapter.notifyDataSetChanged();
-
-                                        setCardToRulesPile(game.rulesPile);
-
-                                        handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
-                                        handTopView.setText(String.valueOf(game.players.get(2).hand.cards.size()));
-                                        handRightViewInner.setText(String.valueOf(game.players.get(3).hand.cards.size()));
-                                    }
-                                });
+                                            handLeftViewInner.setText(String.valueOf(game.players.get(1).hand.cards.size()));
+                                            handTopView.setText(String.valueOf(game.players.get(2).hand.cards.size()));
+                                            handRightViewInner.setText(String.valueOf(game.players.get(3).hand.cards.size()));
+                                        }
+                                    });
+                                    break;
                             }
                         }
+                        // Подсветка следущего игрока
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int id = game.getNextId();
+                                switch (id) {
+                                    case 0:
+                                        handLeftViewOuter.setBackground(deck_lr_drawable);
+                                        handRightViewOuter.setBackground(deck_lr_drawable);
+                                        handTopView.setBackground(deck_drawable);
+                                        break;
+                                    case 1:
+                                        handLeftViewOuter.setBackground(deck_lr_active_drawable);
+                                        handRightViewOuter.setBackground(deck_lr_drawable);
+                                        handTopView.setBackground(deck_drawable);
+                                        break;
+                                    case 2:
+                                        handLeftViewOuter.setBackground(deck_lr_drawable);
+                                        handRightViewOuter.setBackground(deck_lr_drawable);
+                                        handTopView.setBackground(deck_active_drawable);
+                                        break;
+                                    case 3:
+                                        handLeftViewOuter.setBackground(deck_lr_drawable);
+                                        handRightViewOuter.setBackground(deck_lr_active_drawable);
+                                        handTopView.setBackground(deck_drawable);
+                                        break;
+                                }
+                            }
+                        });
                     }
                 } while (false);
             }

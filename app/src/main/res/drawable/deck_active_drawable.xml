@@ -5,27 +5,27 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="@color/dark_gray" />
+                android:color="@color/golden" />
             <solid android:color="@color/gray" />
             <corners android:radius="4dp"/>
         </shape>
     </item>
     <!-- Второй прямоугольник, сдвинутый влево -->
-    <item android:top="8dp">
+    <item android:left="8dp">
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="@color/dark_gray" />
+                android:color="@color/golden" />
             <solid android:color="@color/gray" />
             <corners android:radius="4dp"/>
         </shape>
     </item>
     <!-- Третий прямоугольник, еще больше сдвинутый влево -->
-    <item android:top="16dp">
+    <item android:left="16dp">
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="@color/dark_gray" />
+                android:color="@color/golden" />
             <solid android:color="@color/gray" />
             <corners android:radius="4dp"/>
         </shape>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Red7</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="label_numOfPlayers">число игроков</string>
+    <string name="start">начать игру</string>
 </resources>

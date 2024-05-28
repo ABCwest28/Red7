@@ -11,8 +11,6 @@ public class Player {
     protected Hand hand;
     protected Card intentPlayCard;
     protected Card intentDiscardCard;
-    protected boolean isWinIntentPlayCard;      // Нужно их сбрасывать после каждого нового вызова или в начале хода
-    protected boolean isWinIntentDiscardCard;
 
     public Player(int id, Game game) {
         this.id = id;
@@ -61,56 +59,62 @@ public class Player {
             //System.out.println("There isn't such card in hand : " + card);
     }
 
-    public void tryToPlayCard(int indexOfCard) {
+    public boolean tryToPlayCard(int indexOfCard) {
         if (0 <= indexOfCard && indexOfCard < hand.cards.size()) {
             this.intentPlayCard = hand.cards.get(indexOfCard);
 
             palette.addCard(this.intentPlayCard);
-            isWinIntentPlayCard = game.getIdWinner(game.rulesPile) == id;
+            boolean res = game.getIdWinner(game.rulesPile) == id;
             palette.removeCard(intentPlayCard);
+            return res;
         }
         else {
             //System.out.println("There isn't card in hand with index : " + indexOfCard);
+            return false;
         }
     }
 
-    public void tryToPlayCard(Card intentCard) {
+    public boolean tryToPlayCard(Card intentCard) {
         if (hand.cards.contains(intentCard)) {
             this.intentPlayCard = intentCard;
 
             palette.addCard(this.intentPlayCard);
-            isWinIntentPlayCard = game.getIdWinner(game.rulesPile) == id;
+            boolean res = game.getIdWinner(game.rulesPile) == id;
             palette.removeCard(intentPlayCard);
+            return res;
         }
         else {
             //System.out.println("There isn't such card in hand : " + intentCard);
+            return false;
         }
     }
 
-    public void tryToDiscardCard(int indexOfCard) {
+    public boolean tryToDiscardCard(int indexOfCard) {
         if (0 <= indexOfCard && indexOfCard < hand.cards.size()) {
             intentDiscardCard = hand.cards.get(indexOfCard);
-            isWinIntentDiscardCard = game.getIdWinner(intentDiscardCard) == id;
+            return game.getIdWinner(intentDiscardCard) == id;
         }
         else {
             //System.out.println("There isn't card in hand with index : " + indexOfCard);
+            return false;
         }
     }
 
-    public void tryToDiscardCard(Card intentCard) {
+    public boolean tryToDiscardCard(Card intentCard) {
         if (hand.cards.contains(intentCard)) {
             intentDiscardCard = intentCard;
-            isWinIntentDiscardCard = game.getIdWinner(intentCard) == id;
+            return game.getIdWinner(intentCard) == id;
         }
         else {
             //System.out.println("There isn't such card in hand");
+            return false;
         }
     }
 
     /**
      id карт нельзя менять до конца хода (в текущем ходу)
      */
-    public void tryToPlayThenDiscardCard(int indexOfIntentPlayCard, int indexOfIntentDiscardCard) {
+    public boolean tryToPlayThenDiscardCard(int indexOfIntentPlayCard, int indexOfIntentDiscardCard) {
         if      (0 <= indexOfIntentPlayCard && 0 <= indexOfIntentDiscardCard &&
                 indexOfIntentPlayCard < hand.cards.size() && indexOfIntentDiscardCard < hand.cards.size() &&
                 indexOfIntentPlayCard != indexOfIntentDiscardCard) {
@@ -120,42 +124,34 @@ public class Player {
 
             palette.addCard(intentPlayCard);
 
-            if (game.getIdWinner(intentDiscardCard) == id) {
-                isWinIntentPlayCard = true;
-                isWinIntentDiscardCard = true;
-            }
-            else {
-                isWinIntentPlayCard = false;
-                isWinIntentDiscardCard = false;
-            }
+            boolean res = game.getIdWinner(intentDiscardCard) == id;
 
             palette.removeCard(this.intentPlayCard);
+
+            return res;
         }
         else {
             //System.out.println("Wrong index(es) : " + indexOfIntentPlayCard + " or " + indexOfIntentDiscardCard);
+            return false;
         }
     }
 
-    public void tryToPlayThenDiscardCard(Card intentPlayCard, Card intentDiscardCard) {
+    public boolean tryToPlayThenDiscardCard(Card intentPlayCard, Card intentDiscardCard) {
         if (hand.cards.contains(intentPlayCard) && hand.cards.contains(intentDiscardCard)) {
             this.intentPlayCard = intentPlayCard;
             this.intentDiscardCard = intentDiscardCard;
 
             palette.addCard(this.intentPlayCard);
 
-            if (game.getIdWinner(this.intentDiscardCard) == id) {
-                isWinIntentPlayCard = true;
-                isWinIntentDiscardCard = true;
-            }
-            else {
-                isWinIntentPlayCard = false;
-                isWinIntentDiscardCard = false;
-            }
+            boolean res = game.getIdWinner(this.intentDiscardCard) == id;
 
             palette.removeCard(intentPlayCard);
+
+            return res;
         }
         else {
             //System.out.println("There isn't such card in hand : " + intentPlayCard + " or " + intentDiscardCard);
+            return false;
         }
     }
 
@@ -168,36 +164,33 @@ public class Player {
             isInGame = false;
             return 0;
         }
+
         for (int i = 0; i < hand.cards.size(); i++) {
-            tryToPlayCard(i);
-            if (isWinIntentPlayCard) {
+            if (tryToPlayCard(i)) {
                 playCardFromHandToPalette(i);
-                isWinIntentPlayCard = false;
                 return 1;
             }
         }
+
         for (int i = 0; i < hand.cards.size(); i++) {
-            tryToDiscardCard(i);
-            if (isWinIntentDiscardCard) {
+            if (tryToDiscardCard(i)) {
                 discardCardFromHandToRulesPile(i);
-                isWinIntentDiscardCard = false;
                 return 2;
             }
         }
+
         for (int j = 0; j < hand.cards.size(); j++) {
             for (int i = 0; i < hand.cards.size(); i++) {
                 if (i != j) {
-                    tryToPlayThenDiscardCard(i, j);
-                    if (isWinIntentDiscardCard && isWinIntentPlayCard) {
+                    if (tryToPlayThenDiscardCard(i, j)) {
                         playCardFromHandToPalette(i);
                         discardCardFromHandToRulesPile(j);
-                        isWinIntentPlayCard = false;
-                        isWinIntentDiscardCard = false;
                         return 3;
                     }
                 }
             }
         }
+
         isInGame = false;
         return 4;
     }

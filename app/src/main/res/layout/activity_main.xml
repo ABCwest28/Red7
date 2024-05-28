@@ -6,13 +6,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
     <RelativeLayout
         android:id="@+id/game_field_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/sea1"
         android:layout_weight="1"
         >
 
@@ -154,7 +154,7 @@
                 android:id="@+id/rules_pile_outer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_gray"
+                android:background="@drawable/card_background"
                 android:padding="4dp"
                 android:gravity="center"
                 app:layout_constraintStart_toEndOf="@id/guideline_left"
@@ -185,6 +185,7 @@
         android:id="@+id/hand_field_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dark_gray"
         >
 
         <androidx.recyclerview.widget.RecyclerView

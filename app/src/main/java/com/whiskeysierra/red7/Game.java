@@ -17,6 +17,7 @@ public class Game {
         }
     }
 
+
     public int getIdWinner(Card ruleCard) {
         class DataToCheck {
             int id;
@@ -59,6 +60,7 @@ public class Game {
         return idOfPlayerWithHighestCard;
     }
 
+
     public boolean checkWin() {
         int activePlayers = 0;
         for (Player player : players) if (player.isInGame) ++activePlayers;
@@ -67,6 +69,7 @@ public class Game {
         else
             return false;
     }
+
 
     public int getNextId() {
         int id = getIdWinner(rulesPile);

@@ -5,8 +5,9 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="#2A2A2A" />
-            <solid android:color="#949494" />
+                android:color="@color/dark_gray" />
+            <solid android:color="@color/gray" />
+            <corners android:radius="4dp"/>
         </shape>
     </item>
     <!-- Второй прямоугольник, сдвинутый влево -->
@@ -14,8 +15,9 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="#2A2A2A" />
-            <solid android:color="#949494" />
+                android:color="@color/dark_gray" />
+            <solid android:color="@color/gray" />
+            <corners android:radius="4dp"/>
         </shape>
     </item>
     <!-- Третий прямоугольник, еще больше сдвинутый влево -->
@@ -23,8 +25,9 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="#2A2A2A" />
-            <solid android:color="#949494" />
+                android:color="@color/dark_gray" />
+            <solid android:color="@color/gray" />
+            <corners android:radius="4dp"/>
         </shape>
     </item>
 </layer-list>
