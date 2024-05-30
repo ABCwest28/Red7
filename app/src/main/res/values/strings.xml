@@ -4,4 +4,14 @@
     <string name="minus">-</string>
     <string name="label_numOfPlayers">число игроков</string>
     <string name="start">начать игру</string>
+    <string name="play_card">сыграть</string>
+    <string name="discard_card">сбросить</string>
+    <string name="do_turn">сходить</string>
+    <string name="do_return">вернуть</string>
+    <string name="do_giveup">сдаться</string>
+    <string name="help">\?</string>
+    <string name="win">Вы выиграли</string>
+    <string name="lose">Вы проиграли</string>
+    <string name="back_to_menu">вернуться в главное меню</string>
+
 </resources>

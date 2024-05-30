@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/half_transparent">
+
+    <ImageView
+        android:id="@+id/red7_logo"
+        app:srcCompat="@drawable/logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textView_lose"
+        />
+
+
+
+    <TextView
+        android:id="@+id/textView_lose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/lose"
+        android:fontFamily="@font/open_sans"
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/red7_logo"
+        app:layout_constraintBottom_toTopOf="@id/button_back_to_menu"
+        />
+
+    <Button
+        android:id="@+id/button_back_to_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_plus_minus"
+        android:text="@string/back_to_menu"
+        android:textSize="20sp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,191 +9,232 @@
     android:background="@drawable/bg"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/game_field_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/top_recycler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/guideline_top"
-                app:layout_constraintEnd_toStartOf="@+id/right_recycler"
-                app:layout_constraintStart_toEndOf="@+id/left_recycler"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/active_recycler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/left_recycler"
-                app:layout_constraintEnd_toStartOf="@+id/right_recycler"
-                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_b"
-                app:layout_constraintHorizontal_bias="0.5"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/right_recycler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/top_recycler"
-                app:layout_constraintBottom_toTopOf="@+id/active_recycler"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/left_recycler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/top_recycler"
-                app:layout_constraintBottom_toTopOf="@+id/active_recycler"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.05" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.95" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_top"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.05" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_bottom_b"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.95" />
-
-            <TextView
-                android:id="@+id/hand_top_view"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/deck_drawable"
-                android:gravity="end|center"
-                android:textColor="@color/white"
-                android:textSize="35sp"
-                android:paddingEnd="6dp"
-                app:layout_constraintBottom_toBottomOf="@+id/top_recycler"
-                app:layout_constraintEnd_toStartOf="@+id/top_recycler"
-                app:layout_constraintTop_toTopOf="@+id/top_recycler"
-                />
-
-            <LinearLayout
-                android:id="@+id/hand_left_view_outer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/deck_lr_drawable"
-
-                android:gravity="center|bottom"
-
-                app:layout_constraintEnd_toEndOf="@+id/left_recycler"
-                app:layout_constraintStart_toStartOf="@+id/left_recycler"
-                app:layout_constraintBottom_toTopOf="@+id/left_recycler"
-                >
-                <com.whiskeysierra.red7.VerticalTextView
-                    android:id="@+id/hand_left_view_inner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="35sp"
-                    android:gravity="top|right"
-
-                    >
-                </com.whiskeysierra.red7.VerticalTextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/hand_right_view_outer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/deck_lr_drawable"
-
-                android:gravity="center|bottom"
-
-                app:layout_constraintEnd_toEndOf="@+id/right_recycler"
-                app:layout_constraintStart_toStartOf="@+id/right_recycler"
-                app:layout_constraintBottom_toTopOf="@+id/right_recycler"
-                >
-                <com.whiskeysierra.red7.VerticalTextView
-                    android:id="@+id/hand_right_view_inner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="35sp"
-                    android:gravity="bottom|right"
-
-                    >
-                </com.whiskeysierra.red7.VerticalTextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rules_pile_outer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_background"
-                android:padding="4dp"
-                android:gravity="center"
-                app:layout_constraintStart_toEndOf="@id/guideline_left"
-                app:layout_constraintEnd_toStartOf="@id/guideline_right"
-                app:layout_constraintTop_toBottomOf="@id/guideline_top"
-                app:layout_constraintBottom_toTopOf="@id/guideline_bottom_b"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/rules_pile_color"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/rules_pile_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="35sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/hand_field_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
-        >
+        android:layout_height="match_parent"
+        android:id="@+id/const_main_layout">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"/>
+            android:background="@color/dark_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/active_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/left_recycler"
+            app:layout_constraintEnd_toStartOf="@+id/right_recycler"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            android:layout_marginBottom="20dp"
+            />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top"
+            app:layout_constraintEnd_toStartOf="@+id/right_recycler"
+            app:layout_constraintStart_toEndOf="@+id/left_recycler"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/right_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/top_recycler"
+            app:layout_constraintBottom_toTopOf="@+id/active_recycler"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/left_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/top_recycler"
+            app:layout_constraintBottom_toTopOf="@+id/active_recycler"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <TextView
+            android:id="@+id/hand_top_view"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/deck_drawable"
+            android:gravity="end|center"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:paddingEnd="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_recycler"
+            app:layout_constraintEnd_toStartOf="@+id/top_recycler"
+            app:layout_constraintTop_toTopOf="@+id/top_recycler"
+            />
+
+        <Button
+            android:id="@+id/button_do_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_plus_minus"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/do_turn"
+            android:textColor="@color/white"
+            android:padding="5dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/active_recycler"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right" />
+
+        <Button
+            android:id="@+id/button_do_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_plus_minus"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/do_return"
+            android:textColor="@color/white"
+            android:padding="5dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/active_recycler"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+
+        <Button
+            android:id="@+id/button_do_giveup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_plus_minus"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/do_giveup"
+            android:padding="5dp"
+
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/button_do_return"
+            app:layout_constraintEnd_toEndOf="@+id/button_do_return"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+
+        <Button
+            android:id="@+id/button_help"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_plus_minus"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/help"
+            android:padding="0dp"
+
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"/>
+
+        <LinearLayout
+            android:id="@+id/hand_left_view_outer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/deck_lr_drawable"
+
+            android:gravity="center|bottom"
+
+            app:layout_constraintEnd_toEndOf="@+id/left_recycler"
+            app:layout_constraintStart_toStartOf="@+id/left_recycler"
+            app:layout_constraintBottom_toTopOf="@+id/left_recycler"
+            >
+            <com.whiskeysierra.red7.VerticalTextView
+                android:id="@+id/hand_left_view_inner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:gravity="top|right"
+
+                >
+            </com.whiskeysierra.red7.VerticalTextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hand_right_view_outer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/deck_lr_drawable"
+
+            android:gravity="center|bottom"
+
+            app:layout_constraintEnd_toEndOf="@+id/right_recycler"
+            app:layout_constraintStart_toStartOf="@+id/right_recycler"
+            app:layout_constraintBottom_toTopOf="@+id/right_recycler"
+            >
+            <com.whiskeysierra.red7.VerticalTextView
+                android:id="@+id/hand_right_view_inner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:gravity="bottom|right"
+
+                >
+            </com.whiskeysierra.red7.VerticalTextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rules_pile_outer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:padding="4dp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/guideline_left"
+            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+            app:layout_constraintTop_toBottomOf="@id/guideline_top"
+            app:layout_constraintBottom_toTopOf="@id/guideline_bottom_b"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/rules_pile_color"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/rules_pile_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="35sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

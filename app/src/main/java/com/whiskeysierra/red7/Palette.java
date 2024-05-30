@@ -17,6 +17,7 @@ public class Palette {
         cards.remove(index);
     }
 
+    //
     protected ArrayList<Card> getRuledCards(Card cardFromRulesPile) {
         ArrayList<Card> ruledCards = new ArrayList<>();
 

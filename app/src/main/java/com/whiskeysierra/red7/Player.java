@@ -33,12 +33,8 @@ public class Player {
     }
 
     public void playCardFromHandToPalette(Card card) {
-        if (hand.cards.contains(card)) {
-            palette.addCard(card);
-            hand.removeCard(card);
-        }
-        //else
-            //System.out.println("There isn't such card in hand : " + card);
+        palette.addCard(card);
+        hand.removeCard(card);
     }
 
     public void discardCardFromHandToRulesPile(int indexOfCard) {
@@ -51,12 +47,8 @@ public class Player {
     }
 
     public void discardCardFromHandToRulesPile(Card card) {
-        if (hand.cards.contains(card)) {
-            game.rulesPile = card;
-            hand.removeCard(card);
-        }
-        //else
-            //System.out.println("There isn't such card in hand : " + card);
+        game.rulesPile = card;
+        hand.removeCard(card);
     }
 
     public boolean tryToPlayCard(int indexOfCard) {
@@ -75,18 +67,12 @@ public class Player {
     }
 
     public boolean tryToPlayCard(Card intentCard) {
-        if (hand.cards.contains(intentCard)) {
-            this.intentPlayCard = intentCard;
+        this.intentPlayCard = intentCard;
 
-            palette.addCard(this.intentPlayCard);
-            boolean res = game.getIdWinner(game.rulesPile) == id;
-            palette.removeCard(intentPlayCard);
-            return res;
-        }
-        else {
-            //System.out.println("There isn't such card in hand : " + intentCard);
-            return false;
-        }
+        palette.addCard(this.intentPlayCard);
+        boolean res = game.getIdWinner(game.rulesPile) == id;
+        palette.removeCard(intentPlayCard);
+        return res;
     }
 
     public boolean tryToDiscardCard(int indexOfCard) {
@@ -101,14 +87,8 @@ public class Player {
     }
 
     public boolean tryToDiscardCard(Card intentCard) {
-        if (hand.cards.contains(intentCard)) {
-            intentDiscardCard = intentCard;
-            return game.getIdWinner(intentCard) == id;
-        }
-        else {
-            //System.out.println("There isn't such card in hand");
-            return false;
-        }
+        intentDiscardCard = intentCard;
+        return game.getIdWinner(intentCard) == id;
     }
 
     /**
@@ -137,22 +117,16 @@ public class Player {
     }
 
     public boolean tryToPlayThenDiscardCard(Card intentPlayCard, Card intentDiscardCard) {
-        if (hand.cards.contains(intentPlayCard) && hand.cards.contains(intentDiscardCard)) {
-            this.intentPlayCard = intentPlayCard;
-            this.intentDiscardCard = intentDiscardCard;
+        this.intentPlayCard = intentPlayCard;
+        this.intentDiscardCard = intentDiscardCard;
 
-            palette.addCard(this.intentPlayCard);
+        palette.addCard(this.intentPlayCard);
 
-            boolean res = game.getIdWinner(this.intentDiscardCard) == id;
+        boolean res = game.getIdWinner(this.intentDiscardCard) == id;
 
-            palette.removeCard(intentPlayCard);
+        palette.removeCard(intentPlayCard);
 
-            return res;
-        }
-        else {
-            //System.out.println("There isn't such card in hand : " + intentPlayCard + " or " + intentDiscardCard);
-            return false;
-        }
+        return res;
     }
 
     public ArrayList<Card> getRuledCards(Card cardFromRulesPile) {

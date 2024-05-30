@@ -4,6 +4,7 @@
     <color name="dark_gray">#2A2A2A</color>
     <color name="gray">#949494</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="half_transparent">#AA000000</color>
     <color name="transparent">#00000000</color>
 
     <color name="golden">#FFD700</color>
@@ -13,11 +14,11 @@
     <color name="sea3">#A8CD9F</color>
     <color name="sea4">#E2F4C5</color>
 
-    <color name="card_red">     #A0153E</color>
-    <color name="card_orange">  #FF9B50</color>
-    <color name="card_yellow">  #FFD93D</color>
-    <color name="card_green">   #42855B</color>
-    <color name="card_blue">    #0096FF</color>
-    <color name="card_indigo">  #051367</color>
-    <color name="card_violet">  #916BBF</color>
+    <color name="card_red">     #ea1c34</color>
+    <color name="card_orange">  #f47b2e</color>
+    <color name="card_yellow">  #fdb913</color>
+    <color name="card_green">   #a6ce39</color>
+    <color name="card_blue">    #00bae3</color>
+    <color name="card_indigo">  #0069b0</color>
+    <color name="card_violet">  #683894</color>
 </resources>

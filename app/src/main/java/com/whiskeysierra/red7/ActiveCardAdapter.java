@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ActiveCardAdapter extends RecyclerView.Adapter<ActiveCardAdapter.ViewHolder> {
-    private ArrayList<Card> cards;
+    protected ArrayList<Card> cards;
     private Context context;
     private int itemWidth, itemHeight;
 
@@ -23,6 +23,23 @@ public class ActiveCardAdapter extends RecyclerView.Adapter<ActiveCardAdapter.Vi
         this.itemWidth = itemWidth;
         this.itemHeight = itemHeight;
     }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+        notifyItemInserted(cards.size() - 1);
+    }
+
+    public Card removeCard(int position) {
+        Card card = cards.remove(position);
+        notifyItemRemoved(position);
+        return card;
+    }
+
+
 
     @NonNull
     @Override
@@ -46,6 +63,18 @@ public class ActiveCardAdapter extends RecyclerView.Adapter<ActiveCardAdapter.Vi
     public int getItemCount() {
         return cards.size();
     }
+
+    public void removeItem(int position) {
+        cards.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void addItem(Card card) {
+        cards.add(card);
+        notifyItemInserted(cards.size() - 1);
+    }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView number_of_card;

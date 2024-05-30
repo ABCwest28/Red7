@@ -7,6 +7,9 @@ public class Game {
     protected Deck deck;
     protected Card rulesPile;
 
+    protected Card intentPlayCard;
+    protected Card intentDiscardCard;
+
     public Game(int numOfPlayers) {
         deck = new Deck();
         players = new ArrayList<>(numOfPlayers);
@@ -17,7 +20,7 @@ public class Game {
         }
     }
 
-
+    //если карт 0 нужно считать по старшей
     public int getIdWinner(Card ruleCard) {
         class DataToCheck {
             int id;
