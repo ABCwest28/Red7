@@ -4,6 +4,7 @@
     <string name="minus">-</string>
     <string name="label_numOfPlayers">число игроков</string>
     <string name="start">начать игру</string>
+    <string name="rules">правила</string>
     <string name="play_card">сыграть</string>
     <string name="discard_card">сбросить</string>
     <string name="do_turn">сходить</string>

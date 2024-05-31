@@ -92,8 +92,6 @@ public class BottomCardAdapter extends RecyclerView.Adapter<BottomCardAdapter.Vi
             inflater.inflate(R.menu.context_menu, menu);
 
             if (menuClickListenersEnabled) {
-
-
                 menu.findItem(R.id.action_play).setOnMenuItemClickListener(item -> {
 
                     mainActivity.button_do_return.setVisibility(View.VISIBLE);

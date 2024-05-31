@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-    private Handler handler = new Handler();
+    private Handler handler;
     private boolean isPaused = false;
     private boolean playerDidTurn = false;
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected Runnable gameRunnable = new Runnable() {
         @Override
         public void run() {
-            if (isPaused) {
+            if (isPaused || isFinishing() || isDestroyed()) {
                 handler.postDelayed(this, 1000);
                 return;
             }
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 playerDidTurn = false;
                 runOnUiThread(() -> {
                     bottomCardAdapter.menuClickListenersEnabled = false;
-                    runOnUiThread(() -> button_do_giveup.setVisibility(View.INVISIBLE));
+                    button_do_giveup.setVisibility(View.INVISIBLE);
                 });
 
             } else {
@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void handleBotTurnResult(int turnResult) {
         runOnUiThread(() -> {
+            if (isFinishing() || isDestroyed()) return;
+
             switch (turnResult) {
                 case 0:
                     //TODO вылет игрока
@@ -124,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void handleHighlightNextPlayer() {
         runOnUiThread(() -> {
+            if (isFinishing() || isDestroyed()) return;
+
             switch (game.getNextId()) {
                 case 0:
                     switch (numOfPlayers) {
@@ -214,8 +218,68 @@ public class MainActivity extends AppCompatActivity {
         deck_lr_active_drawable = ContextCompat.getDrawable(this, R.drawable.deck_lr_active_drawable);
 
         preparationByPlayers(numOfPlayers);
-        gameProcess();
+        handler = new Handler();
+        gameProcessOld();
     }
+
+
+    protected void gameProcessOld() {
+        Thread myThread = new Thread() {
+            @Override
+            public void run() {
+
+                boolean key = true;
+
+                do {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (game.checkWin()) {
+                        runOnUiThread(() -> {
+                            if (game.getIdWinner(game.rulesPile) == 0) openPopupWindow(true);
+                            else openPopupWindow(false);
+                        });
+                        key = false;
+                    }
+                    else {
+                        int idPlayerTurn = game.getNextId();
+
+                        if (idPlayerTurn == 0) {
+                            bottomCardAdapter.menuClickListenersEnabled = true;
+                            runOnUiThread(() -> button_do_giveup.setVisibility(View.VISIBLE));
+
+                            if (game.players.get(0).hand.cards.isEmpty()) {
+                                game.players.get(0).isInGame = false;
+                            } else {
+                                while (!playerDidTurn) {
+                                    try {
+                                        Thread.sleep(100);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            playerDidTurn = false;
+                            bottomCardAdapter.menuClickListenersEnabled = false;
+                            runOnUiThread(() -> button_do_giveup.setVisibility(View.INVISIBLE));
+
+                        } else {
+                            int turnResult = game.players.get(idPlayerTurn).doTurn();
+                            handleBotTurnResult(turnResult);
+
+                            handleHighlightNextPlayer();
+                        }
+                    }
+                } while (key);
+            }
+        };
+        myThread.start();
+    }
+
 
     protected void preparationByPlayers(int numOfPlayers) {
         button_do_turn.setVisibility(View.INVISIBLE);
@@ -254,39 +318,27 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(bottomRecyclerView);
 
 
-        button_do_return.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                do_return();
-            }
-        });
+        button_do_return.setOnClickListener(v -> do_return());
 
-        button_do_turn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                do_turn();
-            }
-        });
+        button_do_turn.setOnClickListener(v -> do_turn());
 
-        button_do_giveup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game.players.get(0).isInGame = false;
-                playerDidTurn = true;
-            }
+        button_do_giveup.setOnClickListener(v -> {
+            game.players.get(0).isInGame = false;
+            playerDidTurn = true;
         });
 
         button_help.setOnClickListener(v -> {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.help_popup_layout, null);
+            runOnUiThread(() -> {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.help_popup_layout, null);
 
-            // Указываем размеры и прочие параметры
-            int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-            int height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-            boolean focusable = true;
-            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                int width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+                int height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true;
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-            popupWindow.showAtLocation(findViewById(R.id.main), Gravity.CENTER, 0, 0);
+                popupWindow.showAtLocation(findViewById(R.id.main), Gravity.CENTER, 0, 0);
+            });
         });
 
 
@@ -362,20 +414,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isPaused = true;
-        handler.removeCallbacks(gameRunnable);
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        isPaused = true;
+//        handler.removeCallbacks(gameRunnable);
+//    }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isPaused = false;
-        handler.post(gameRunnable);
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        isPaused = false;
+//        handler.post(gameRunnable);
+//    }
 
 
     protected void notifyAdaptersAndSetNumOfCardsInHand(int numOfPlayers) {
@@ -412,7 +464,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     protected void openPopupWindow(boolean win) {
+        if (isFinishing() || isDestroyed()) {
+            // Если Activity уже завершена или уничтожена, не отображаем всплывающее окно
+            return;
+        }
+
         runOnUiThread(() -> {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
@@ -441,72 +499,82 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     protected void do_turn() {
-        if (game.intentDiscardCard != null) game.rulesPile = game.intentDiscardCard;
+        runOnUiThread(() -> {
+            if (game.intentDiscardCard != null) game.rulesPile = game.intentDiscardCard;
 
-        activeCardAdapter.notifyDataSetChanged();
-        bottomCardAdapter.notifyDataSetChanged();
-        setCardToRulesPile(game.rulesPile);
-        game.intentPlayCard     = null;
-        game.intentDiscardCard  = null;
+            activeCardAdapter.notifyDataSetChanged();
+            bottomCardAdapter.notifyDataSetChanged();
+            setCardToRulesPile(game.rulesPile);
+            game.intentPlayCard     = null;
+            game.intentDiscardCard  = null;
 
-        button_do_turn.     setVisibility(View.INVISIBLE);
-        button_do_return.   setVisibility(View.INVISIBLE);
+            button_do_turn.     setVisibility(View.INVISIBLE);
+            button_do_return.   setVisibility(View.INVISIBLE);
 
-        playerDidTurn = true;
+            playerDidTurn = true;
+        });
     }
+
 
     protected void do_return() {
-        if (game.intentPlayCard != null) {
-            game.players.get(0).palette.removeCard(game.intentPlayCard);
-            game.players.get(0).hand.addCard(game.intentPlayCard);
-            game.intentPlayCard = null;
-        }
-        if (game.intentDiscardCard != null) {
-            game.players.get(0).hand.addCard(game.intentDiscardCard);
-            game.intentDiscardCard = null;
-        }
+        runOnUiThread(() -> {
+            if (game.intentPlayCard != null) {
+                game.players.get(0).palette.removeCard(game.intentPlayCard);
+                game.players.get(0).hand.addCard(game.intentPlayCard);
+                game.intentPlayCard = null;
+            }
+            if (game.intentDiscardCard != null) {
+                game.players.get(0).hand.addCard(game.intentDiscardCard);
+                game.intentDiscardCard = null;
+            }
 
-        button_do_return.setVisibility(View.INVISIBLE);
-        button_do_turn.setVisibility(View.INVISIBLE);
-        activeCardAdapter.notifyDataSetChanged();
-        bottomCardAdapter.notifyDataSetChanged();
-        setCardToRulesPile(game.rulesPile);
+            button_do_return.setVisibility(View.INVISIBLE);
+            button_do_turn.setVisibility(View.INVISIBLE);
+            activeCardAdapter.notifyDataSetChanged();
+            bottomCardAdapter.notifyDataSetChanged();
+            setCardToRulesPile(game.rulesPile);
+        });
+
     }
 
-    protected void setCardToRulesPile(@NonNull Card card) {
-        rulesPileNumber.setText(String.valueOf(card.number));
 
-        int color;
-        switch (card.valueOfColor) {
-            case 1:
-                color = this.getResources().getColor(R.color.card_violet);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-            case 2:
-                color = this.getResources().getColor(R.color.card_indigo);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-            case 3:
-                color = this.getResources().getColor(R.color.card_blue);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-            case 4:
-                color = this.getResources().getColor(R.color.card_green);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-            case 5:
-                color = this.getResources().getColor(R.color.card_yellow);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-            case 6:
-                color = this.getResources().getColor(R.color.card_orange);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-            case 7:
-                color = this.getResources().getColor(R.color.card_red);
-                rulesPileColor.setBackgroundColor(color);
-                break;
-        }
+    protected void setCardToRulesPile(@NonNull Card card) {
+        runOnUiThread(() -> {
+            rulesPileNumber.setText(String.valueOf(card.number));
+
+            int color;
+            switch (card.valueOfColor) {
+                case 1:
+                    color = this.getResources().getColor(R.color.card_violet);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+                case 2:
+                    color = this.getResources().getColor(R.color.card_indigo);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+                case 3:
+                    color = this.getResources().getColor(R.color.card_blue);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+                case 4:
+                    color = this.getResources().getColor(R.color.card_green);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+                case 5:
+                    color = this.getResources().getColor(R.color.card_yellow);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+                case 6:
+                    color = this.getResources().getColor(R.color.card_orange);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+                case 7:
+                    color = this.getResources().getColor(R.color.card_red);
+                    rulesPileColor.setBackgroundColor(color);
+                    break;
+            }
+        });
     }
 }
