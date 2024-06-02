@@ -104,13 +104,13 @@ public class BottomCardAdapter extends RecyclerView.Adapter<BottomCardAdapter.Vi
                     game.intentPlayCard = card;
 
                     if (game.intentDiscardCard == null && game.players.get(0).tryToPlayCard(game.intentPlayCard)) {
-                        Toast.makeText(context, "P", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(context, "P", Toast.LENGTH_LONG).show();
                         button_do_turn.setVisibility(View.VISIBLE);
                     }
 
                     else if (game.intentDiscardCard != null &&
                             game.players.get(0).tryToPlayThenDiscardCard(game.intentPlayCard, game.intentDiscardCard)) {
-                        Toast.makeText(context, "PD", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(context, "PD", Toast.LENGTH_LONG).show();
                         button_do_turn.setVisibility(View.VISIBLE);
                     }
 
@@ -137,13 +137,13 @@ public class BottomCardAdapter extends RecyclerView.Adapter<BottomCardAdapter.Vi
 
                     if (game.intentPlayCard == null &&
                             game.players.get(0).tryToDiscardCard(game.intentDiscardCard)) {
-                        Toast.makeText(context, "D", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(context, "D", Toast.LENGTH_LONG).show();
                         button_do_turn.setVisibility(View.VISIBLE);
                     }
 
                     else if (game.intentPlayCard != null && game.players.get(0).
                             tryToPlayThenDiscardCard(game.intentPlayCard, game.intentDiscardCard)) {
-                        Toast.makeText(context, "PD", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(context, "PD", Toast.LENGTH_LONG).show();
                         button_do_turn.setVisibility(View.VISIBLE);
                     }
 
